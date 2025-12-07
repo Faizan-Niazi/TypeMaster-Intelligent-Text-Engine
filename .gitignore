@@ -1,6 +1,20 @@
-# Ignore compiled files
-*.exe
-*.o
+# Visual Studio temporary files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build folders
+Debug/
+Release/
+x64/
+
+# Binary files
 *.obj
+*.exe
 *.dll
 *.pdb
+
+# Logs
+*.log
