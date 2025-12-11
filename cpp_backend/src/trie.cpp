@@ -2,6 +2,7 @@
 #include<vector>
 #include<./include/trie.h>
 using namespace std;
+
 //name defines what it does...heehe
 void Trie::insertWord (const string& s){
 TrieNode* current =root;
@@ -55,18 +56,16 @@ for(int i=0; i<prefix.size();i++){
 return current;
 }
 // collects all possible words(which ends on eow) can be created with given prefix...
-  void Trie::collectWords(TrieNode* node, string prefix, vector<string>& words) const{
+  void Trie::collectWords(TrieNode* node, string prefix, vector<string>& words) const {
     if (node == nullptr) return;
-
-        for (size_t i = 0; i < node->children.size(); i++) {
-            TrieNode* child = node->children[i];
-
-
-            if (child != nullptr) {   // recursion only on valid child
-                char nextChar = 'a' + i;
-                collectWords(child, prefix + nextChar, words);
-            }
-
+    if (node->isEnd) {
+        words.push_back(prefix);
+    }
+    for (size_t i = 0; i < node->children.size(); i++) {
+        TrieNode* child = node->children[i];
+        if (child != nullptr) {
+            char nextChar = 'a' + i;
+            collectWords(child, prefix + nextChar, words);
         }
-
-  }
+    }
+}

@@ -1,18 +1,36 @@
-#include<iostream>
-#include "trie.cpp"
+#include <iostream>
+#include "../include/trie.h"
+  
 using namespace std;
-// testing Trie class
+
 int main() {
     Trie trie;
     trie.insertWord("apple");
     trie.insertWord("ape");
     trie.insertWord("apt");
-    trie.insertWord("application");  //5x words inserted
-string s="application";
+    trie.insertWord("application");
+
+    string s = "application";
     if (trie.searchWord(s)) {
-        cout << "found";
-        return 1;
+        cout << "found\n";
+    } else {
+        cout << "Searching ...not found\n";
     }
-    cout << "not found";
+
+    string prefix = "a";
+    if (trie.searchPrefix(prefix)) {
+        cout << "word with this prefix exist..\n";
+    } else {
+        cout << "Searching ...Prefix not found\n";
+    }
+
+    TrieNode* prefixNode = trie.getNodeForPrefix(prefix);
+    vector<string> words;
+    trie.collectWords(prefixNode, prefix, words);
+
+    for (string w : words) {
+        cout << w << endl;
+    }
+
     return 0;
 }
