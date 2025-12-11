@@ -1,4 +1,4 @@
-#include<iostream>
+
 #include<vector>
 #include<./include/trie.h>
 using namespace std;
