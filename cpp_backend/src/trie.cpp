@@ -1,6 +1,9 @@
 
 #include<vector>
-#include<./include/trie.h>
+#include "../include/trie.h"
+
+#include<string>
+
 using namespace std;
 //name defines what it does...heehe
 void Trie::insertWord (const string& s){
