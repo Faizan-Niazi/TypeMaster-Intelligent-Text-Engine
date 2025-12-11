@@ -2,7 +2,7 @@
 #include<vector>
 #include<./include/trie.h>
 using namespace std;
-
+//name defines what it does...heehe
 void Trie::insertWord (const string& s){
 TrieNode* current =root;
 
@@ -15,7 +15,7 @@ for(int i=0; i<s.size();i++){
 }
 current->isEnd=true;
 }
-
+// searching word......here
 bool Trie::searchWord (const string& s)const{
 TrieNode* current =root;
  
@@ -28,12 +28,12 @@ for(int i=0; i<s.size();i++){
 }
 return current->isEnd;
 }
-
-bool Trie::searchPrefix (const string& s)const{
+// checks prefix exists or not ,, for it doesnt matter whether it ends on eow or not
+bool Trie::searchPrefix (const string& prefix)const{
 TrieNode* current =root;
 
-for(int i=0; i<s.size();i++){
-     int idx = s[i]-'a';
+for(int i=0; i<prefix.size();i++){
+     int idx = prefix[i]-'a';
     if(current->children[idx]==nullptr){
         return false;
     }
@@ -41,3 +41,32 @@ for(int i=0; i<s.size();i++){
 }
 return current->isEnd;
 }
+// returns last node of prefix...
+TrieNode* Trie::getNodeForPrefix(const string & prefix)const{
+TrieNode* current =root;
+
+for(int i=0; i<prefix.size();i++){
+     int idx = prefix[i]-'a';
+    if(current->children[idx]==nullptr){
+        return nullptr;
+    }
+    current=current->children[idx];
+}
+return current;
+}
+// collects all possible words(which ends on eow) can be created with given prefix...
+  void Trie::collectWords(TrieNode* node, string prefix, vector<string>& words) const{
+    if (node == nullptr) return;
+
+        for (size_t i = 0; i < node->children.size(); i++) {
+            TrieNode* child = node->children[i];
+
+
+            if (child != nullptr) {   // recursion only on valid child
+                char nextChar = 'a' + i;
+                collectWords(child, prefix + nextChar, words);
+            }
+
+        }
+
+  }
