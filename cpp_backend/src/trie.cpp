@@ -9,7 +9,7 @@ TrieNode* current =root;
 
 for(int i=0; i<s.size();i++){
     int idx = s[i]-'a';
-    if(current->children[idx]==nullptr){
+    if(current->children[idx]==nullptr){    
         current->children[idx] =new TrieNode;
     }
     current=current->children[idx];
