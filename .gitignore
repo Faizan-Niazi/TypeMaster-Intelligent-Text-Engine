@@ -18,3 +18,7 @@ x64/
 
 # Logs
 *.log
+
+# intellij Idea files
+.idea/
+java_frontend/.idea/
