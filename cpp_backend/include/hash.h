@@ -11,7 +11,7 @@ struct Entry {
     string word;
     string wordtype;
     string definition;
-    int frequency;      // for future ranking (optional)
+    int frequency;      // for s ranking 
 };
 
 struct WordGroup {
