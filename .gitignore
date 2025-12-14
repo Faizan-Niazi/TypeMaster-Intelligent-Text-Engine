@@ -1,4 +1,34 @@
-# Visual Studio temporary files
+###############################
+# GLOBAL IDE / EDITOR FILES
+###############################
+
+# VS Code
+.vscode/
+
+# IntelliJ / IDEA
+.idea/
+java_frontend/.idea/
+
+# Windows junk
+Thumbs.db
+desktop.ini
+
+###############################
+# C++ BUILD ARTIFACTS
+###############################
+*.obj
+*.o
+*.a
+*.lib
+*.dll
+*.exe
+*.pdb
+*.sdf
+*.cache
+*.ipch
+*.db
+
+# Visual Studio
 .vs/
 *.suo
 *.user
@@ -9,12 +39,33 @@
 Debug/
 Release/
 x64/
+cpp_backend/build/
+cpp_backend/bin/
 
-# Binary files
-*.obj
-*.exe
-*.dll
-*.pdb
+###############################
+# JAVA BUILD ARTIFACTS
+###############################
+*.class
+*.jar
+*.war
+*.ear
+*.iml
 
-# Logs
+# Java project folders
+java_frontend/out/
+java_frontend/build/
+java_frontend/target/
+
+###############################
+# LOGS / TEMP FILES
+###############################
 *.log
+*.tmp
+*.temp
+*.swp
+
+###############################
+# MISC
+###############################
+# Weird BOM file you had
+ï»¿
