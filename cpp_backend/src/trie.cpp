@@ -9,6 +9,7 @@ TrieNode* current =root;
 
 for(int i=0; i<s.size();i++){
     int idx = s[i]-'a';
+    if (idx < 0 || idx >= 26) continue;
     if(current->children[idx]==nullptr){    
         current->children[idx] =new TrieNode;
     }
@@ -22,6 +23,7 @@ TrieNode* current =root;
  
 for(int i=0; i<s.size();i++){
     int idx = s[i]-'a';
+    if (idx < 0 || idx >= 26) continue;
     if(current->children[idx]==nullptr){
         return false;
     }
@@ -35,6 +37,7 @@ TrieNode* current =root;
 
 for(int i=0; i<prefix.size();i++){
      int idx = prefix[i]-'a';
+     if (idx < 0 || idx >= 26) continue;
     if(current->children[idx]==nullptr){
         return false;
     }
@@ -48,6 +51,7 @@ TrieNode* current =root;
 
 for(int i=0; i<prefix.size();i++){
      int idx = prefix[i]-'a';
+     if (idx < 0 || idx >= 26) continue;
     if(current->children[idx]==nullptr){
         return nullptr;
     }
@@ -65,6 +69,7 @@ return current;
         TrieNode* child = node->children[i];
         if (child != nullptr) {
             char nextChar = 'a' + i;
+            
             collectWords(child, prefix + nextChar, words);
         }
     }
