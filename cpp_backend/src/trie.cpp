@@ -40,7 +40,7 @@ for(int i=0; i<prefix.size();i++){
     }
     current=current->children[idx];
 }
-return current->isEnd;
+return true;
 }
 // returns last node of prefix...
 TrieNode* Trie::getNodeForPrefix(const string & prefix)const{
