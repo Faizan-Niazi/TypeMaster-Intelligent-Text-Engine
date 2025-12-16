@@ -12,6 +12,8 @@ void MaxHeap::insert(const string& word, int score) {
     item.word = word;
     item.score = score;
     arr.push_back(item);
+
+    heapifyUp((int)arr.size() - 1);
 }
 
 void MaxHeap::heapifyUp(int index) {
