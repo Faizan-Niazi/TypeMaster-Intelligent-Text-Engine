@@ -13,3 +13,16 @@ void MaxHeap::insert(const string& word, int score) {
     item.score = score;
     arr.push_back(item);
 }
+
+void MaxHeap::heapifyUp(int index) {
+    while (index > 0) {
+        int parent = (index - 1) / 2;
+        if (arr[parent].score >= arr[index].score) break;
+
+        HeapItem temp = arr[parent];
+        arr[parent] = arr[index];
+        arr[index] = temp;
+
+        index = parent;
+    }
+}
