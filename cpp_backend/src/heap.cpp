@@ -16,6 +16,21 @@ void MaxHeap::insert(const string& word, int score) {
     heapifyUp((int)arr.size() - 1);
 }
 
+string MaxHeap::extractMax() {
+    if (arr.empty()) return "NO_SUGGESTION";
+
+    string best = arr[0].word;
+
+    arr[0] = arr.back();
+    arr.pop_back();
+
+    if (!arr.empty())
+        heapifyDown(0);
+
+    return best;
+}
+
+
 void MaxHeap::heapifyUp(int index) {
     while (index > 0) {
         int parent = (index - 1) / 2;
@@ -52,4 +67,6 @@ void MaxHeap::heapifyDown(int index) {
 
         index = largest;
     }
+
+
 }
