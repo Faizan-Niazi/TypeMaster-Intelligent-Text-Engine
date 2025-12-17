@@ -10,7 +10,7 @@ HashTable::~HashTable() {
 
 unsigned int HashTable::hash(const string& s) { //polynomial rolling hash
     unsigned int h = 0;
-    for (int i = 0; i < (int)s.size(); i++) {
+    for (int i = 0; i < s.size(); i++) {
         h = (h * 31u + (unsigned char)s[i]) % SIZE;
     }
     return h;
@@ -20,7 +20,7 @@ void HashTable::insert(const Entry& e) {
     unsigned int idx = hash(e.word);
 
     // Check if word group already exists
-    for (int i = 0; i < (int)table[idx].size(); i++) {
+    for (int i = 0; i < table[idx].size(); i++) {
         if (table[idx][i].word == e.word) {
             table[idx][i].entries.push_back(e);
             return;
