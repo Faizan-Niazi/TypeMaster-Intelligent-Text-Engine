@@ -2,9 +2,35 @@
 #include <fstream>
 #include "../include/hash.h"
 #include "../include/trie.h"
+#include "../include/heap.h"
  
 using namespace std;
+// ----------------- TEST HEAP -----------------
+void testMaxHeap() {
+    MaxHeap heap;
 
+    cout << "--- Testing MaxHeap ---\n";
+
+    // Initially empty
+    cout << "Heap empty? " << (heap.isEmpty() ? "Yes" : "No") << "\n";
+
+    // Insert items
+    heap.insert("apple", 5);
+    heap.insert("banana", 2);
+    heap.insert("cherry", 8);
+    heap.insert("date", 6);
+
+    cout << "Heap empty after inserts? " << (heap.isEmpty() ? "Yes" : "No") << "\n";
+
+    // Extract max repeatedly
+    cout << "Extracting elements in order of score:\n";
+    while (!heap.isEmpty()) {
+        cout << "  " << heap.extractMax() << "\n";
+    }
+
+    // Extract from empty heap
+    cout << "Extract from empty heap: " << heap.extractMax() << "\n";
+}
 string toLowerStr(string s) {
     for (int i = 0; i < (int)s.size(); i++) {
         char& c = s[i];
@@ -63,4 +89,9 @@ int main() {
     trie.collectWords(prefixNode, prefix, words);
 
     for (string w : words) cout << w << endl;
+
+
+    // Testing Heap DS 
+    cout << "\n--- Testing Heap ---\n";
+    testMaxHeap();
 }
