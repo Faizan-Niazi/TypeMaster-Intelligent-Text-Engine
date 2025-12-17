@@ -37,3 +37,19 @@ void MaxHeap::heapifyDown(int index) {
         int left = 2 * index + 1;
         int right = 2 * index + 2;
         int largest = index;
+        
+        if (left < n && arr[left].score > arr[largest].score)
+            largest = left;
+
+        if (right < n && arr[right].score > arr[largest].score)
+            largest = right;
+
+        if (largest == index) break;
+
+        HeapItem temp = arr[index];
+        arr[index] = arr[largest];
+        arr[largest] = temp;
+
+        index = largest;
+    }
+}
