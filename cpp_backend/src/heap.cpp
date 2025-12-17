@@ -28,3 +28,12 @@ void MaxHeap::heapifyUp(int index) {
         index = parent;
     }
 }
+
+// Initial structure
+void MaxHeap::heapifyDown(int index) {
+    int n = (int)arr.size();
+
+    while (true) {
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+        int largest = index;
