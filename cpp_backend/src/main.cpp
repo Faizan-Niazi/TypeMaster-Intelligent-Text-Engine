@@ -68,30 +68,30 @@ void loadDictionaryCSV(const string& filename, HashTable& dict, Trie& trie) {
 }
 
 int main() {
-    HashTable dict;
-    Trie trie;
-    loadDictionaryCSV("../dictionary.csv", dict, trie);
+    // HashTable dict;
+    // Trie trie;
+    // loadDictionaryCSV("../dictionary.csv", dict, trie);
 
-    trie.insertWord("apple");
-    trie.insertWord("ape");
-    trie.insertWord("apt");
-    trie.insertWord("application");
+    // trie.insertWord("apple");
+    // trie.insertWord("ape");
+    // trie.insertWord("apt");
+    // trie.insertWord("application");
 
-    string s = "application";
-    cout << (trie.searchWord(s) ? "found\n" : "Searching ...not found\n");
+    // string s = "application";
+    // cout << (trie.searchWord(s) ? "found\n" : "Searching ...not found\n");
 
-    string prefix = "a";
-    cout << (trie.searchPrefix(prefix) ? "word with this prefix exist..\n"
-        : "Searching ...Prefix not found\n");
+    // string prefix = "a";
+    // cout << (trie.searchPrefix(prefix) ? "word with this prefix exist..\n"
+    //     : "Searching ...Prefix not found\n");
 
-    TrieNode* prefixNode = trie.getNodeForPrefix(prefix);
-    vector<string> words;
-    trie.collectWords(prefixNode, prefix, words);
+    // TrieNode* prefixNode = trie.getNodeForPrefix(prefix);
+    // vector<string> words;
+    // trie.collectWords(prefixNode, prefix, words);
 
-    for (string w : words) cout << w << endl;
+    // for (string w : words) cout << w << endl;
 
 
     // Testing Heap DS 
-    cout << "\n--- Testing Heap ---\n";
+    cout << "\n--- Testing Heap Functionality---\n";
     testMaxHeap();
 }
