@@ -47,3 +47,27 @@ void Server::waitForClient() {
     }
     cout << "Client Connected!\n";
 }
+
+string Server::recvLine() {
+    char buffer[2048];
+    int bytes = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
+    if (bytes <= 0) return "";
+    buffer[bytes] = '\0';
+    return string(buffer);
+}
+
+void Server::sendLine(const string& msg) {
+    send(clientSocket, msg.c_str(), static_cast<int>(msg.size()), 0);
+}
+
+void Server::closeAll() {
+    if (clientSocket != INVALID_SOCKET) {
+        closesocket(clientSocket);
+        clientSocket = INVALID_SOCKET;
+    }
+    if (serverSocket != INVALID_SOCKET) {
+        closesocket(serverSocket);
+        serverSocket = INVALID_SOCKET;
+    }
+    WSACleanup();
+}
