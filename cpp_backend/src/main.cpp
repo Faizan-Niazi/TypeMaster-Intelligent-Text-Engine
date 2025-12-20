@@ -104,9 +104,9 @@ vector<string> getNearestWordsTrie(const string& query, int maxSuggestions = 10,
 }
 
 int main() {
-    // HashTable dict;
-    // Trie trie;
-    // loadDictionaryCSV("../dictionary.csv", dict, trie);
+    HashTable dict;
+    Trie trie;
+    loadDictionaryCSV("../dictionary.csv", dict, trie);
 
     
 }
