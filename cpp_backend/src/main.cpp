@@ -7,15 +7,14 @@
 #include "../include/server.h"
 
 using namespace std;
-// ----------------- TEST HEAP -----------------
+
+// ----------------- HELPER FUNCTIONS -----------------
 
 string toLowerStr(string s)
 {
     for (int i = 0; i < (int)s.size(); i++)
     {
         char &c = s[i];
-        // if (c >= 'A' && c <= 'Z')
-        //    c = c - 'A' + 'a';
         if (c >= 'A' && c <= 'Z')
             c = c + 32;
     }
@@ -88,43 +87,8 @@ void loadDictionaryCSV(const string &filename, HashTable &dict, Trie &trie)
     }
     cout << "Dictionary fully loaded: " << count << "\n";
 }
-// -----------------Get Nearest Words Trie-----------------
-vector<string> getNearestWordsTrie(const string& query, int maxSuggestions = 10, int maxDistance = 3,const Trie & trie) {
-    vector<string> result;
-    if (query.empty()) return result;
 
-    // Start from the prefix node
-    string prefix = query.substr(0, 1);
-    TrieNode* node = trie.getNodeForPrefix(prefix);
-    if (!node) return result;
-
-    // Collect all candidate words under this prefix
-    vector<string> candidates;
-    trie.collectWords(node, prefix, candidates);
-
-    // Use your MaxHeap to rank suggestions
-    MaxHeap heap;
-
-    for (const string& cand : candidates) {
-        int d = editDistance(query, cand);
-        if (d <= maxDistance) {
-            // Smaller edit distance = better match
-            // Heap is max-based, so invert the score
-            int score = -d;
-            heap.insert(cand, score);
-        }
-    }
-
-    // Extract top N suggestions
-    for (int i = 0; i < maxSuggestions && !heap.isEmpty(); i++) {
-        result.push_back(heap.extractMax());
-    }
-
-    return result;
-}
-
-// -----------------Get Nearest Words Trie-----------------
-// FIXED: All non-default parameters must come before default parameters
+// ----------------- GET NEAREST WORDS TRIE -----------------
 vector<string> getNearestWordsTrie(const string &query, Trie &trie, int maxSuggestions = 10, int maxDistance = 3)
 {
     vector<string> result;
@@ -165,13 +129,79 @@ vector<string> getNearestWordsTrie(const string &query, Trie &trie, int maxSugge
     return result;
 }
 
+// ----------------- PROCESS CLIENT REQUEST -----------------
+void processRequest(const string &req, HashTable &dict, Trie &trie, ErrorLog &log, Server &server)
+{
+    if (req.rfind("CHECK:", 0) == 0)
+    {
+        string w = toLowerStr(req.substr(6));
+        if (trie.searchWord(w))
+            server.sendLine("SPELL:VALID\nEND\n");
+        else if (trie.searchPrefix(w))
+            server.sendLine("SPELL:PREFIX\nEND\n");
+        else
+        {
+            log.logError(w);
+            server.sendLine("SPELL:INVALID\nEND\n");
+        }
+    }
+    else if (req.rfind("DEFINE:", 0) == 0)
+    {
+        string w = toLowerStr(req.substr(7));
+        WordGroup *wg = dict.search(w);
+
+        if (wg && !wg->entries.empty())
+        {
+            string out = "DEF:";
+            for (int i = 0; i < (int)wg->entries.size(); i++)
+            {
+                out += "(" + wg->entries[i].wordtype + ") " + wg->entries[i].definition;
+                if (i < (int)wg->entries.size() - 1)
+                    out += "\n";
+            }
+            server.sendLine(out + "\nEND\n");
+        }
+        else
+        {
+            server.sendLine("DEF:NOTFOUND\nEND\n");
+        }
+    }
+    else if (req.rfind("PREDICT:", 0) == 0)
+    {
+        string w = toLowerStr(req.substr(8));
+        vector<string> sug = getNearestWordsTrie(w, trie, 10, 3);
+        string out;
+        for (int i = 0; i < (int)sug.size(); i++)
+        {
+            out += sug[i];
+            if (i < (int)sug.size() - 1)
+                out += ",";
+        }
+        server.sendLine("PRED:" + out + "\nEND\n");
+    }
+    else if (req == "LOG")
+    {
+        server.sendLine(log.exportCSV() + "\nEND\n");
+    }
+    else
+    {
+        server.sendLine("UNKNOWN\nEND\n");
+    }
+}
+
+// ----------------- MAIN -----------------
 int main()
 {
+    // Local variables (not global)
     HashTable dict;
     Trie trie;
     ErrorLog log;
-    loadDictionaryCSV("../dictionary.csv", dict, trie);
     Server server;
+
+    // Load dictionary
+    loadDictionaryCSV("../dictionary.csv", dict, trie);
+
+    // Start server
     if (!server.start(8080))
     {
         cerr << "Server failed\n";
@@ -179,73 +209,24 @@ int main()
     }
     cout << "Backend ready...\n";
 
+    // Main server loop
     while (true)
     {
         string req = server.recvLine();
         if (req.empty())
             break;
+
+        // Clean up request string
         while (!req.empty() && (req.back() == '\r' || req.back() == '\n'))
             req.pop_back();
+
         cout << "JAVA -> [" << req << "]\n";
 
-        if (req.rfind("CHECK:", 0) == 0)
-        {
-            string w = toLowerStr(req.substr(6));
-            if (trie.searchWord(w))
-                server.sendLine("SPELL:VALID\nEND\n");
-            else if (trie.searchPrefix(w))
-                server.sendLine("SPELL:PREFIX\nEND\n");
-            else
-            {
-                log.logError(w);
-                server.sendLine("SPELL:INVALID\nEND\n");
-            }
-        }
-        else if (req.rfind("DEFINE:", 0) == 0)
-        {
-            string w = toLowerStr(req.substr(7));
-            WordGroup *wg = dict.search(w);
-
-            if (wg && !wg->entries.empty())
-            {
-                string out = "DEF:";
-                for (int i = 0; i < (int)wg->entries.size(); i++)
-                {
-                    out += "(" + wg->entries[i].wordtype + ") " + wg->entries[i].definition;
-                    if (i < (int)wg->entries.size() - 1)
-                        out += "\n";
-                }
-                server.sendLine(out + "\nEND\n");
-            }
-            else
-            {
-                server.sendLine("DEF:NOTFOUND\nEND\n");
-            }
-        }
-        else if (req.rfind("PREDICT:", 0) == 0)
-        {
-            string w = toLowerStr(req.substr(8));
-            // FIXED: Now parameters are in correct order
-            vector<string> sug = getNearestWordsTrie(w, trie, 10, 3);
-            string out;
-            for (int i = 0; i < (int)sug.size(); i++)
-            {
-                out += sug[i];
-                if (i < (int)sug.size() - 1)
-                    out += ",";
-            }
-            server.sendLine("PRED:" + out + "\nEND\n");
-        }
-        else if (req == "LOG")
-        {
-            server.sendLine(log.exportCSV() + "\nEND\n");
-        }
-        else
-        {
-            server.sendLine("UNKNOWN\nEND\n");
-        }
+        // Process request with local variables
+        processRequest(req, dict, trie, log, server);
     }
 
+    // Cleanup
     server.closeAll();
     return 0;
 }
