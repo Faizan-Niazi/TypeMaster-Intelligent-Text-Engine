@@ -88,6 +88,40 @@ void loadDictionaryCSV(const string &filename, HashTable &dict, Trie &trie)
     }
     cout << "Dictionary fully loaded: " << count << "\n";
 }
+// -----------------Get Nearest Words Trie-----------------
+vector<string> getNearestWordsTrie(const string& query, int maxSuggestions = 10, int maxDistance = 3,const Trie & trie) {
+    vector<string> result;
+    if (query.empty()) return result;
+
+    // Start from the prefix node
+    string prefix = query.substr(0, 1);
+    TrieNode* node = trie.getNodeForPrefix(prefix);
+    if (!node) return result;
+
+    // Collect all candidate words under this prefix
+    vector<string> candidates;
+    trie.collectWords(node, prefix, candidates);
+
+    // Use your MaxHeap to rank suggestions
+    MaxHeap heap;
+
+    for (const string& cand : candidates) {
+        int d = editDistance(query, cand);
+        if (d <= maxDistance) {
+            // Smaller edit distance = better match
+            // Heap is max-based, so invert the score
+            int score = -d;
+            heap.insert(cand, score);
+        }
+    }
+
+    // Extract top N suggestions
+    for (int i = 0; i < maxSuggestions && !heap.isEmpty(); i++) {
+        result.push_back(heap.extractMax());
+    }
+
+    return result;
+}
 
 // -----------------Get Nearest Words Trie-----------------
 // FIXED: All non-default parameters must come before default parameters
