@@ -69,3 +69,8 @@ java_frontend/target/
 ###############################
 # Weird BOM file you had
 ï»¿
+
+###############################
+# CUSTOM IGNORES
+###############################
+error_log.csv
