@@ -8,7 +8,7 @@ using namespace std;
 // Each item has a word and a score (higher = better)
 struct HeapItem {
     string word;
-    int score;      // priority value
+    int score;      // priority valueI(min changes required to create a valid word)
 };
 
 // MaxHeap class: maintains a collection of HeapItems
