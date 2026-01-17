@@ -30,8 +30,8 @@ Before running TypeMaster, ensure the following requirements are met.
 Clone the project repository using Git:
 
 ```bash
-git clone https://github.com/TypeMaster – Intelligent Text Engine.git
-cd DSA_Project_TypeMaster_FaizanKhan_AbdulRafay
+[git clone https://github.com/.git](https://github.com/Faizan-Niazi/TypeMaster-Intelligent-Text-Engine.git)
+cd TypeMaster-Intelligent-Text-Engine
 ```
 
 Ensure that `dictionary.csv` exists in the project root directory.

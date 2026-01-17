@@ -109,7 +109,7 @@ g++ --version
 
 ```bash
 [git clone https://github.com/.git](https://github.com/Faizan-Niazi/TypeMaster-Intelligent-Text-Engine.git)
-cd DSA_Project_TypeMaster_FaizanKhan_AbdulRafay
+cd TypeMaster-Intelligent-Text-Engine
 ```
 
 ---
@@ -180,17 +180,6 @@ Detailed documentation is available in the **docs/** folder:
 - System Architecture
 - UML Diagrams
 - Performance Analysis
-
----
-
-## 👨‍💻 Authors
-
-- **M. Faizan Khan** (242840)
-- **Abdul Rafay** (242684)
-
-**Course:** CS-201 – Data Structures & Algorithms  
-**Instructor:** Sir Qaiser Manzoor  
-**Institution:** Air University, Islamabad
 
 ---
 
