@@ -183,17 +183,6 @@ Detailed documentation is available in the **docs/** folder:
 
 ---
 
-## 👨‍💻 Authors
-
-- **M. Faizan Khan** (242840)
-- **Abdul Rafay** (242684)
-
-**Course:** CS-201 – Data Structures & Algorithms  
-**Instructor:** Sir Qaiser Manzoor  
-**Institution:** Air University, Islamabad
-
----
-
 ## 📜 License
 
 This project is released under the **MIT License**.
