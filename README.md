@@ -58,7 +58,7 @@ This project is designed to:
 ## 📂 Project Structure
 
 ```text
-DSA_Project_TypeMaster_FaizanKhan_AbdulRafay/
+TypeMaster-Intelligent-Text-Engine/
 │
 ├── README.md
 ├── LICENSE
@@ -198,6 +198,3 @@ for **personal, academic, or commercial purposes**, provided that the original a
 See the `LICENSE` file for full license text.
 
 ---
-
-✅ *This README is properly formatted for GitHub and includes complete setup, build, and run instructions.*
-
