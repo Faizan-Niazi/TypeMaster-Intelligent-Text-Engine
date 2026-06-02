@@ -1,57 +1,65 @@
-# TypeMaster – Intelligent Text Engine
+# ⌨️ TypeMaster – Intelligent Text Engine
 
-> **Offline intelligent text processing and typing analysis system** built using **C++ (C++17)** and **Java Swing (JDK 17+)**
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-Java%2017%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java Badge" />
+  <img src="https://img.shields.io/badge/Language-C%2B%2B17-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++ Badge" />
+  <img src="https://img.shields.io/badge/GUI-Java%20Swing-blueviolet?style=for-the-badge&logo=oracle&logoColor=white" alt="Swing Badge" />
+  <img src="https://img.shields.io/badge/Network-TCP%20Sockets-10B981?style=for-the-badge&logo=internet-explorer&logoColor=white" alt="Sockets Badge" />
+  <img src="https://img.shields.io/badge/Platform-Cross--Platform-brightgreen?style=for-the-badge" alt="Platform Badge" />
+</p>
+
+An **offline intelligent text processing and typing analysis system** combining a high-performance **C++ backend** server with an interactive **Java Swing desktop client** communicating via TCP sockets. 
+
+This project demonstrates practical implementations of core **Data Structures & Algorithms** (Trie, Hash Tables, Heaps) to solve real-world problems (spell checking, autocompletion, analytics) with near-zero latency.
 
 ---
 
-## 📌 Project Overview
-
-**TypeMaster – Intelligent Text Engine** is a desktop-based application that provides:
-- Real-time spell checking
-- Intelligent word prediction
-- Dictionary lookup
-- Typing performance analytics (WPM, CPM, Accuracy)
-
-The system works **100% offline**, ensuring **privacy**, **low latency**, and **reliability**.  
-It demonstrates the **practical implementation of Data Structures & Algorithms** using a real-world **client–server architecture**.
+## 🎥 Visual Demo
+*(Place your recorded preview GIF or screenshot here!)*
+> 💡 **Tip for Faizan**: Record a 15-second clip of the application running, convert it to a GIF, name it `demo.gif`, save it in the `docs/` folder, and embed it here using:
+> `![TypeMaster Interface](./docs/demo.gif)`
 
 ---
 
 ## 🎯 Key Features
 
-- Real-time spell checking using **Trie**
-- Intelligent word prediction using **Edit Distance + MaxHeap**
-- Fast dictionary lookup using **Hash Table**
-- Typing speed and accuracy analysis (WPM, CPM, Accuracy)
-- Fully offline execution
-- Modern Java Swing graphical interface
-- TCP socket-based client–server communication
+* **Real-Time Spell Checking**: Employs a custom **Trie** structure on the backend to validate word spells instantly as you type.
+* **Intelligent Word Prediction**: Computes predictions using **Edit Distance (Levenshtein algorithm)** sorted by a **Max-Heap (Priority Queue)** to suggest the closest matches.
+* **Instant Dictionary Lookup**: Uses a fast custom **Hash Table** for O(1) word searches and definitions.
+* **Typing Performance Analytics**: Measures real-time typing dynamics including **WPM** (Words Per Minute), **CPM** (Characters Per Minute), and **Accuracy Percentage**.
+* **Offline Client-Server Model**: Communication is handled entirely locally via **TCP Socket Programming** on port `8080`, separating business logic (C++) from UI presentation (Java).
 
 ---
 
-## 🧠 Educational Focus
+## 🧠 System Architecture
 
-This project is designed to:
-- Apply theoretical **DSA concepts** in a practical system
-- Demonstrate **time and space complexity** benefits
-- Showcase **client–server communication** using sockets
-- Serve as a **complete academic project** for Data Structures courses
+```mermaid
+graph LR
+    subgraph Java Frontend (Client)
+        A[ModernMainFrame GUI] -->|Input Text| B[Socket Client]
+        D[Analytics Calculator]
+    end
+
+    subgraph C++ Backend (Server)
+        B -->|TCP Port 8080| C[Socket Server]
+        C --> E[SpellChecker - Trie]
+        C --> F[Predictor - Edit Distance + Heap]
+        C --> G[Dictionary - Hash Table]
+        E & F & G -->|Results JSON/Text| C
+    end
+
+    C -->|Response| B
+```
 
 ---
 
-## 🛠 Technology Stack
+## 🛠️ Technology Stack
 
-### Backend
-- **Language:** C++ (C++17)
-- **Concepts:** Trie, Hash Table, Heap, Socket Programming
-
-### Frontend
-- **Language:** Java (JDK 17 or higher)
-- **Framework:** Java Swing
-
-### Architecture
-- Two-tier **Client–Server Architecture**
-- Communication via **TCP sockets (localhost:8080)**
+* **Backend (Logic Server)**: C++ (C++17 standard)
+  * Concepts: Socket programming (Winsock / POSIX sockets), Trie Trees, Hash Tables, Priority Queues.
+* **Frontend (Desktop GUI)**: Java (JDK 17+)
+  * Layout: Java Swing, AWT, Event Dispatch Thread (EDT).
+* **Communication Protocol**: TCP/IP Sockets (Raw Strings/JSON streams).
 
 ---
 
@@ -59,24 +67,20 @@ This project is designed to:
 
 ```text
 TypeMaster-Intelligent-Text-Engine/
-│
-├── README.md
-├── LICENSE
-├── dictionary.csv
-├── docs/
+├── cpp_backend/              # C++ Backend Server
+│   ├── include/              # Header declarations (.h)
+│   └── src/                  # Implementation files (.cpp)
+├── java_frontend/            # Java Swing Client
+│   └── src/                  # Swing Frame, Sockets, and Main entrypoint
+├── docs/                     # Comprehensive Architecture & Guides
 │   ├── 02_Project_Overview.md
 │   ├── 03_Installation_and_Running.md
 │   ├── 04_User_Guide.md
 │   ├── 05_Data_Structures.md
 │   ├── 06_System_Architecture.md
-│   ├── 07_UML_Diagrams.md
 │   └── 08_Performance_Analysis.md
-│
-├── cpp_backend/
-│   ├── include/   # Header files
-│   └── src/       # C++ source files
-│
-└── java_frontend/ # Java Swing frontend
+├── dictionary.csv            # Static offline word dictionary database (14.8 MB)
+└── README.md
 ```
 
 ---
@@ -84,117 +88,77 @@ TypeMaster-Intelligent-Text-Engine/
 ## ⚙️ Setup & Installation
 
 ### Prerequisites
-
-- **Java JDK 17 or higher**
-- **C++ compiler (C++17 compatible)**
-  - Windows: Visual Studio / MinGW
-  - macOS: Clang (Xcode Command Line Tools)
-  - Linux: g++
-
-Verify installations:
-
+Make sure you have both Java JDK and a C++ compiler installed:
 ```bash
+# Verify Java Installation
 java -version
 javac -version
+
+# Verify C++ Compiler Installation
 g++ --version
 ```
 
----
-
-## 🚀 Build & Run Guide
-
-⚠️ **Important:** Always start the **backend first**, then the **frontend**.
-
 ### 1️⃣ Clone the Repository
-
 ```bash
-[git clone https://github.com/.git](https://github.com/Faizan-Niazi/TypeMaster-Intelligent-Text-Engine.git)
+git clone https://github.com/Faizan-Niazi/TypeMaster-Intelligent-Text-Engine.git
 cd TypeMaster-Intelligent-Text-Engine
 ```
 
----
+### 2️⃣ Compile the Backend (C++)
+* **Linux / macOS**:
+  ```bash
+  cd cpp_backend/src
+  g++ -std=c++17 *.cpp -o TypeMaster_Backend
+  ```
+* **Windows (MinGW)**:
+  ```bash
+  cd cpp_backend/src
+  g++ -std=c++17 *.cpp -o TypeMaster_Backend.exe -lws2_32
+  ```
 
-### 2️⃣ Compile Backend (C++)
-
+### 3️⃣ Compile the Frontend (Java)
 ```bash
-cd cpp_backend/src
-g++ -std=c++17 *.cpp -o TypeMaster_Backend
-```
-
-On Windows (MinGW):
-
-```bash
-g++ -std=c++17 *.cpp -o TypeMaster_Backend.exe -lws2_32
-```
-
----
-
-### 3️⃣ Compile Frontend (Java)
-
-```bash
-cd java_frontend
+cd ../../java_frontend
 javac *.java
 ```
 
 ---
 
-### 4️⃣ Run the Application
+## 🚀 Running the Application
 
-#### Terminal 1 – Start Backend
+Always boot the **C++ backend server first** so the Java client can establish a socket connection.
 
-```bash
-cd cpp_backend/src
-./TypeMaster_Backend   # Linux / macOS
-# OR
-TypeMaster_Backend.exe # Windows
-```
+### Step 1: Start Backend Server
+* **Linux / macOS**:
+  ```bash
+  cd cpp_backend/src
+  ./TypeMaster_Backend
+  ```
+* **Windows**:
+  ```bash
+  cd cpp_backend/src
+  TypeMaster_Backend.exe
+  ```
+* *Expected Console Output*:
+  ```text
+  Dictionary fully loaded
+  Server ready. Waiting for Java...
+  ```
 
-Expected output:
-
-```text
-Dictionary fully loaded
-Server ready. Waiting for Java...
-```
-
-#### Terminal 2 – Start Frontend
-
+### Step 2: Start Java Client
+In a new terminal window:
 ```bash
 cd java_frontend
 java ModernMainFrame
 ```
-
-If successful:
-- Backend shows: `Client Connected!`
-- Java GUI opens
+Once the GUI frame launches, the backend terminal will log: `Client Connected!` and the typing test canvas will be fully active.
 
 ---
 
-## 📄 Documentation
-
-Detailed documentation is available in the **docs/** folder:
-
-- Project Overview
-- Installation & Running Guide
-- User Guide
-- Data Structures Implementation
-- System Architecture
-- UML Diagrams
-- Performance Analysis
+## 📄 Documentation & Performance Analysis
+For detailed code flow charts, data structure time/space complexity comparisons, and UML diagrams, please navigate to the [docs/](file:///f:/Work/TypeMaster-Intelligent-Text-Engine/docs/) directory.
 
 ---
 
 ## 📜 License
-
-This project is released under the **MIT License**.
-
-You are free to:
-- Use
-- Modify
-- Distribute
-- Share
-
-for **personal, academic, or commercial purposes**, provided that the original authors are credited.
-
-See the `LICENSE` file for full license text.
-
----
+This project is licensed under the **MIT License**. Feel free to use, modify, and share this codebase for personal, academic, or professional projects.
