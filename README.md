@@ -12,14 +12,6 @@ An **offline intelligent text processing and typing analysis system** combining 
 
 This project demonstrates practical implementations of core **Data Structures & Algorithms** (Trie, Hash Tables, Heaps) to solve real-world problems (spell checking, autocompletion, analytics) with near-zero latency.
 
----
-
-## 🎥 Visual Demo
-*(Place your recorded preview GIF or screenshot here!)*
-> 💡 **Tip for Faizan**: Record a 15-second clip of the application running, convert it to a GIF, name it `demo.gif`, save it in the `docs/` folder, and embed it here using:
-> `![TypeMaster Interface](./docs/demo.gif)`
-
----
 
 ## 🎯 Key Features
 
@@ -35,12 +27,12 @@ This project demonstrates practical implementations of core **Data Structures & 
 
 ```mermaid
 graph LR
-    subgraph Java Frontend (Client)
+    subgraph "Java Frontend (Client)"
         A[ModernMainFrame GUI] -->|Input Text| B[Socket Client]
         D[Analytics Calculator]
     end
 
-    subgraph C++ Backend (Server)
+    subgraph "C++ Backend (Server)"
         B -->|TCP Port 8080| C[Socket Server]
         C --> E[SpellChecker - Trie]
         C --> F[Predictor - Edit Distance + Heap]
